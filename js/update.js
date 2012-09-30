@@ -61,9 +61,10 @@ function move()
 
     //send the data
     socket.send(JSON.stringify({
-        action:'move',
-        x:me.world_x,
-        y:me.world_y
+        action: 'move',
+        x: me.world_x,
+        y: me.world_y,
+        radius: me.radius
     }));
 }
 
@@ -71,7 +72,7 @@ function othermove(data) {
     if (ids.indexOf(data.id) != -1) {
        users[data.id].world_x = data.x;
        users[data.id].world_y = data.y;
-       users[data.id].radius = radius;
+       users[data.id].radius = data.radius;
     } else {
         ids.push(data.id);
         users[data.id] = {

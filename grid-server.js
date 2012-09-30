@@ -98,11 +98,13 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'move') {
-            if ( request.x < 0 || request.x > WORLD_W || request.y < 0 || request.y > WORLD_Y) return false;
-            if(users[socket.id])
-            {
+            if ( request.x < 0 || request.x > WORLD_W || request.y < 0 || request.y > WORLD_Y) 
+                return false;
+            
+            if(users[socket.id]) {
                 users[socket.id].x = request.x;
                 users[socket.id].y = request.y;
+                users[socket.id].radius = request.radius;
             }
         }
 
