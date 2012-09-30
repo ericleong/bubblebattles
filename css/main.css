@@ -16,6 +16,16 @@ textarea, input {
     margin-top: 12pt;
 }
 
+a:link, a:visited {
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #eee;
+    text-decoration: none;
+}
+
 .general h1 {
     position: absolute;
     top: 8pt;
