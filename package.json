@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-10",
+  "version": "0.0.1-11",
   "dependencies": {
     "socket.io": "*",
     "express": "3.x"

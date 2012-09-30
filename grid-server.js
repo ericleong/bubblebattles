@@ -42,6 +42,10 @@ setInterval(function() {
     ghost.update(io.sockets, food, sids, users);
 }, FRAME_INTERVAL);
 
+function add_size() {
+    return Math.pow(Object.keys(sids).length + food.length - 1, .5) * 50;
+}
+
 io.sockets.on('connection', function(socket){
     socket.ip = socket.handshake.address.address;
     socket.on('message', function(message){
@@ -67,8 +71,7 @@ io.sockets.on('connection', function(socket){
 
         if(request.action == 'conn') {
             
-            add_w = Math.pow(Object.keys(sids).length, .5) * 50;
-            add_h = Math.pow(Object.keys(sids).length, .5) * 50;
+            add_w = add_h = add_size();
             ghost.add(io.sockets, food, WORLD_W + add_w, WORLD_H + add_h);
             ghost.add(io.sockets, food, WORLD_W + add_w, WORLD_H + add_h);
 
@@ -153,8 +156,7 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'move') {
-            add_w = Math.pow(Object.keys(sids).length, .5) * 50;
-            add_h = Math.pow(Object.keys(sids).length, .5) * 50;
+            add_w = add_h = add_size();
 
             /*if ( request.x < -add_w || request.x > WORLD_W + add_w
                  || request.y < -add_h || request.y > WORLD_H + add_h) 

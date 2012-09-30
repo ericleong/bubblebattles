@@ -15,6 +15,8 @@ var general = {
     FRAME_INTERVAL: 16,
     WORLD_H: 300,
     WORLD_W: 300,
+    ADD_H: 0,
+    ADD_W: 0,
     CHAT_DURATION: 8000,
     CHAT_WIDTH: 250,
     USER_RADIUS: 5,
