@@ -115,7 +115,6 @@ function otherdraw()
 
         context.font = "12px sans-serif"; 
         context.textAlign = "center";
-        context.fillText(user.name, ux, uy+18);
 
         if (user.radius < 10) {
             context.fillText(user.name, ux, uy+18);

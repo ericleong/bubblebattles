@@ -71,7 +71,7 @@ io.sockets.on('connection', function(socket){
                 }));
             }
             request.color = colors[Math.round(Math.random())];
-            request.radius = Math.random() * 20;
+            request.radius = Math.random() * 10 + 4;
 
             socket.send(json({
                     action:'me',
