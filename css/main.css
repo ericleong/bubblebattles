@@ -1,40 +1,53 @@
-html, textarea, input {
-    background-color: transparent;
-    color:#818181;
-}
 body { background: #CFCFCF; }
-html, body, p {
-    font-family: "Helvetica";  
+
+html, body {
+    font-family: 'Ubuntu', 'Helvetica', sans-serif;
+    font-size: 24pt;    
     margin: 0px;
+    width: 100%;
+    height: 100%;
 }
+
+textarea, input {
+    background-color: white;
+    font-family: 'Ubuntu', 'Helvetica', sans-serif;
+    font-size: 24pt;
+    color:#333;
+    margin-top: 12pt;
+}
+
+.general h1 {
+    position: absolute;
+    top: 8pt;
+    left: 8pt;
+    margin-top: 8pt;
+    margin-left: 8pt;
+}
+
+.general p {
+    position: absolute;
+    top: 8pt;
+    right: 8pt;
+    height: 2em;
+    margin-top: 8pt;
+    margin-right: 8pt;
+    vertical-align: bottom;
+}
+
 div {
     z-index:10001;
     font-weight: bold;
     position: absolute;
 }
+
+#prompt {
+    margin-top: 4em;
+    margin-left: 16pt;
+}
+
 #prompt p {
     color: red;
     font-size: 9pt;
-}
-#chatinput, #chatlog {
-    visibility: hidden;
-    position:static;
-    width:600;
-}
-#chatarea {
-    width:600;
-    height:150;
-    margin-left:-300;
-    text-align: center;
-    bottom:10%;
-    left: 50%;
-}
-#chatlog {
-    height: 132;
-}
-.debug{
-    display:none;
-    left: 10px;
 }
 .error{
     width:400px;
@@ -43,18 +56,17 @@ div {
     bottom:40px;
 }
 .general{
-    top: 20px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
+    width: 100%;
 }
 .message {
     display:none;
-    color: #000000;
-    top: 30px;
-    font-size: 23px;
+    color: #333;
+    margin-top: 25%;
+    font-size: 24pt;
     display: none;
-    background-color: #EEEEEE;
     text-align: center;
     padding: 10px;
-    width: 300px;
-    border: 1px;
+    width: 50%;
 }

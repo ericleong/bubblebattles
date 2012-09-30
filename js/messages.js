@@ -7,8 +7,7 @@ function updateStatus(){
 
 function input(promptstring, func)
 {
-    $("body").append("<div id='prompt' style='top:40px;'>" + promptstring +" <br/><input type='text' name='input' maxlength='15'/><br/><p></p></div>");
-    $("#prompt").css("left", (canvas.width - $("#prompt").width())/2 + "px");
+    $(".general").after("<div id='prompt'>" + promptstring +" <br/><input type='text' name='input' maxlength='15'/><br/><p></p></div>");
 
     $("[name='input']").focus().keypress(function(evt){
         if (evt.which == 13) {

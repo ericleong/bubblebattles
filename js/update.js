@@ -157,8 +157,6 @@ function onResize() {
     canvas.height = canvas.obj.height = window.innerHeight;
     me.x = canvas.width / 2;
     me.y = canvas.height / 2;
-
-    $("#prompt").css("left", (canvas.width - $("#prompt").width())/2 + "px");
 }
 
 function centerCamera() {
