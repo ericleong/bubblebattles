@@ -4,11 +4,15 @@
     }
 
     var respawn = function(me) {
-        me.world_x = 300;
-        me.world_y = 300;
-        me.vx = 1;
-        me.vy = 1;
-        me.radius = 5;
+        var radius = 6;
+        var angle = Math.random() * 2 * Math.PI;
+        var mag = Math.random() * .5 + 1.5;
+
+        me.world_x = Math.random() * (total_world_w - 2 * radius) + radius;
+        me.world_y = Math.random() * (total_world_h - 2 * radius) + radius;
+        me.vx = mag * Math.cos(angle);
+        me.vy = mag * Math.sin(angle);
+        me.radius = radius;
     }
 
     var colDetect = function(me, ids, users, WORLD_W, WORLD_H) {
@@ -49,7 +53,7 @@
     }
 
     module.exports.add = function(sockets, ghosts, total_world_w, total_world_h) {
-        var radius = 5;
+        var radius = 6;
         var angle = Math.random() * 2 * Math.PI;
         var mag = Math.random() * .5 + 1.5;
 
