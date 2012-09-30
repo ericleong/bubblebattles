@@ -96,5 +96,5 @@ $(document).ready(function(){
 
     context = canvas.obj.getContext("2d");
     onResize();
-    input("Enter a username:", init);
+    input("enter a username:", init);
 });
