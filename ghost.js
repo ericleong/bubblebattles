@@ -4,7 +4,7 @@
     }
 
     var respawn = function(me, total_world_w, total_world_h) {
-        var radius = 6;
+        var radius = 5;
         var angle = Math.random() * 2 * Math.PI;
         var mag = Math.random() * .5 + 1.5;
 

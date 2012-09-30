@@ -104,7 +104,7 @@ io.sockets.on('connection', function(socket){
             }
 
             /* determine info for this client */
-            request.radius = Math.random() * 10 + 4;
+            request.radius = Math.random() + 7;
             var rgb = hsvToRgb(10 * (Object.keys(sids).length * 743 % 36), 
                 5 * (Object.keys(sids).length * -343 % 4) + 80, 
                 5 * (Object.keys(sids).length * 233 % 8) + 40);
