@@ -8,8 +8,16 @@
         var angle = Math.random() * 2 * Math.PI;
         var mag = Math.random() * .5 + 1.5;
 
-        me.world_x = Math.random() * (total_world_w - 2 * radius) + radius;
-        me.world_y = Math.random() * (total_world_h - 2 * radius) + radius;
+        if (Math.random() >= .5) {
+            // top or bottom
+            me.world_x = Math.random() * (total_world_w - 2 * radius) + radius; 
+            me.world_y = Math.round(Math.random()) * (total_world_h - 2 * radius) + radius;
+        } else {
+            // left or right
+            me.world_x = Math.round(Math.random()) * (total_world_w - 2 * radius) + radius;
+            me.world_y = Math.random() * (total_world_h - 2 * radius) + radius;
+        }
+        
         me.vx = mag * Math.cos(angle);
         me.vy = mag * Math.sin(angle);
         me.radius = radius;
