@@ -1,11 +1,28 @@
 function respawn() {
     me.x = canvas.width / 2;
     me.y = canvas.height / 2;
-    me.world_x = 300;
-    me.world_y = 300;
     me.vx = 0;
     me.vy = 0;
     me.radius = Math.random() * 10 + 5;
+
+    var good = false;
+
+    while (!good) {
+        me.world_x = Math.random() * (general.WORLD_W + general.ADD_W - 2 * me.radius) + me.radius;
+        me.world_y = Math.random() * (general.WORLD_H + general.ADD_H - 2 * me.radius) + me.radius;
+        
+        good = true;
+        for(var i in ids){
+            var s = ids[i];
+            if (Math.pow(users[s].x - me.x, 2) + 
+                Math.pow(users[s].y - me.y, 2) <
+                me.radius + users[s].radius) {
+
+                good = false;
+                break;
+            }
+        }
+    }
 }
 
 function init(name) {
