@@ -71,11 +71,13 @@ function othermove(data) {
     if (ids.indexOf(data.id) != -1) {
        users[data.id].world_x = data.x;
        users[data.id].world_y = data.y;
+       users[data.id].radius = radius;
     } else {
         ids.push(data.id);
         users[data.id] = {
             world_x: data.x,
             world_y: data.y,
+            radius: data.radius,
             name: ''
         };
         updateStatus();
@@ -106,7 +108,7 @@ function otherdraw()
         uy = user.y = user.world_y - canvas.offset_y;
 
         context.beginPath();
-        context.arc(ux, uy, general.USER_RADIUS, 0, Math.PI*2, true);
+        context.arc(ux, uy, user.radius, 0, Math.PI*2, true);
         context.closePath();
         context.fill();
 
@@ -126,13 +128,15 @@ function otherconn(data) {
         users[sid].world_x = data.x;
         users[sid].world_y = data.y;
         users[sid].color = data.color;
+        users[sid].radius = data.radius;
     } else {
         ids.push(sid);
         users[sid] = {
             name: username,
             world_x: data.x,
             world_y: data.y,
-            color: data.color
+            color: data.color,
+            radius: data.radius
         };
         updateStatus();
     }
@@ -185,14 +189,20 @@ function draw()
     // draw user
     context.fillStyle = me.color;
     context.beginPath();
-    context.arc(canvas.width/2, canvas.height/2, general.USER_RADIUS, 0, Math.PI*2, true);
+    context.arc(canvas.width/2, canvas.height/2, me.radius, 0, Math.PI*2, true);
     context.closePath();
     context.fill();
 
     context.font = "12px sans-serif"; 
     context.textAlign = "center";
-    context.fillText(me.name, canvas.width/2, canvas.height/2+18);
-    if (me.chat) displaychat(me);
+    if (me.radius < 10) {
+        context.fillText(me.name, canvas.width/2, canvas.height/2+18);
+    } else if (me.radius < 30) {
+        context.fillText(me.name, canvas.width/2, canvas.height/2+12 + me.radius);
+    } else {
+        context.fillStyle = "white";
+        context.fillText(me.name, canvas.width/2, canvas.height/2+18);
+    }
 
 
     if(general.DEBUG) {

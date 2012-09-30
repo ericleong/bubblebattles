@@ -6,6 +6,7 @@ function init(name) {
     me.y = canvas.height/2;
     me.world_x = 300;
     me.world_y = 300;
+    me.radius = general.USER_RADIUS;
     centerCamera();
 
     if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1  ) {
@@ -34,6 +35,7 @@ function init(name) {
                     me.name = data.name.replace("&lt;", "<").replace("&gt;",">");
                     me.id = data.id;
                     me.color = data.color;
+                    me.radius = data.radius;
                 }
             });
             socket.on('disconnect', function(){
@@ -41,6 +43,7 @@ function init(name) {
                 users = new Array();
                 me.name = "";
                 me.color = "#555555";
+                me.radius = general.USER_RADIUS;
                 $("#numusers")[0].innerHTML = "Disconnected!<br/>Trying to reconnect...";
                 general.retrying = setInterval("io.connect(general.HOST_URI)", 3000);
             });

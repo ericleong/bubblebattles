@@ -14,8 +14,8 @@ var kicked = new Array();
 var colors = ['#05FDFD', '#FA7005']
 var accepted_actions = ['move', 'speak', 'conn', 'info', 'thekick', 'theban'];
 var currentTime;
-var WORLD_W = 1500,
-    WORLD_Y = 1500;
+var WORLD_W = 600,
+    WORLD_Y = 600;
 
 server.listen(8080);
 var io = sio.listen(server);
@@ -65,17 +65,20 @@ io.sockets.on('connection', function(socket){
                     id: s,
                     name:users[s].name,
                     color:users[s].color,
+                    radius:users[s].radius,
                     x: users[s].x,
                     y: users[s].y
                 }));
             }
             request.color = colors[Math.round(Math.random())];
+            request.radius = Math.random() * 20;
 
             socket.send(json({
                     action:'me',
                     id: socket.id,
                     name: request.name,
-                    color: request.color
+                    color: request.color,
+                    radius: request.radius
             }));
 
             //var access = fs.createWriteStream('/home/azlyth/thegrid/access.log', {flags:'a'});
@@ -83,7 +86,13 @@ io.sockets.on('connection', function(socket){
             //access.write("[" + currentTime.toUTCString() + "] " + request.name + " (SID: " + socket.id + " IP: " + socket.ip +") connected.\n");
 
             sids.push(socket.id);
-            users[socket.id] = {name:request.name, color:request.color, ip:socket.ip, x:request.x, y:request.y};
+            users[socket.id] = {name:request.name, 
+                                color:request.color, 
+                                ip:socket.ip, 
+                                radius:request.radius, 
+                                x:request.x, 
+                                y:request.y
+                            };
         } else if (sids.indexOf(socket.id) == -1) {
             return false;
         }
@@ -97,18 +106,9 @@ io.sockets.on('connection', function(socket){
             }
         }
 
-        if(request.action == 'speak') {
-            //var chatlog = fs.createWriteStream('/home/azlyth/thegrid/chat.log', {flags:'a'});
-            currentTime = new Date();
-            chatlog.write("[" + currentTime.toUTCString() + "] " + users[socket.id].name + ": " + request.chat +"\n");
-            request.chat = request.chat.substring(0,140);
-            io.sockets.send(json(request));
-            return true;
-        }
-
 
         if(request.action == 'info') {
-            console.log("\nINFO\n");
+            /*console.log("\nINFO\n");
             console.log("Total clients: " + sids.length);
             console.log("Kicked: " + kicked);
             console.log("");
@@ -120,7 +120,7 @@ io.sockets.on('connection', function(socket){
                 console.log("color: " + users[s].color);
                 console.log("pos: " + users[s].x + ", " + users[s].y);
                 console.log("");
-            }
+            }*/
         }
 
         if(request.action == 'thekick' || request.action == 'theban') {
