@@ -4,8 +4,8 @@ function updateStatus(){
     general.world_w = general.WORLD_W;
     general.world_h = general.WORLD_H;
 
-    general.ADD_W = ids.length * 100;
-    general.ADD_H = ids.length * 100;
+    general.ADD_W = Math.pow(ids.length, .5) * 50;
+    general.ADD_H = Math.pow(ids.length, .5) * 50;
 }
 
 function input(promptstring, func)

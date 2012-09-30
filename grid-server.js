@@ -150,8 +150,8 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'move') {
-            add_w = Object.keys(sids).length * 100;
-            add_h = Object.keys(sids).length * 100;
+            add_w = Math.pow(Object.keys(sids).length, .5) * 50;
+            add_h = Math.pow(Object.keys(sids).length, .5) * 50;
 
             if ( request.x < -add_w || request.x > WORLD_W + add_w
                  || request.y < -add_h || request.y > WORLD_H + add_h) 
