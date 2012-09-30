@@ -16,6 +16,10 @@ var accepted_actions = ['move', 'speak', 'conn', 'info', 'thekick', 'theban'];
 var currentTime;
 var WORLD_W = 600,
     WORLD_H = 600;
+    FRAME_INTERVAL = 16;
+
+var ghost = require('./ghost');
+var food = new Array();
 
 server.listen(8080);
 var io = sio.listen(server);
@@ -32,6 +36,11 @@ app.configure(function() {
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/grid.html');
 });
+
+ghost.add(io.sockets, food);
+setInterval(function() {
+    ghost.update(io.sockets, food, sids, users);
+}, FRAME_INTERVAL);
 
 io.sockets.on('connection', function(socket){
     socket.ip = socket.handshake.address.address;
@@ -57,10 +66,25 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'conn') {
+            ghost.add(io.sockets, food);
+            ghost.add(io.sockets, food);
+
             request.name = request.name.substring(0,15);
 
+            /* send info about food to client */
+            for (var i = 0; i < food.length; i++) {
+                socket.send(json({
+                    action:'conn',
+                    id: food[i].id,
+                    name: food[i].name,
+                    color: food[i].color,
+                    radius: food[i].radius,
+                    x: food[i].world_x,
+                    y: food[i].world_y
+                }));
+            }
             /* send info about other users to client */
-            for(var i in sids){
+            for (i in sids) {
                 var s = sids[i];
                 socket.send(json({
                     action:'conn',
@@ -180,6 +204,9 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('disconnect', function(){
+        ghost.remove(io.sockets, food);
+        ghost.remove(io.sockets, food);
+
         io.sockets.send(json({'id': socket.id, 'action': 'close'}));
 
         if (sids.indexOf(socket.id) != -1) {
