@@ -43,7 +43,7 @@ setInterval(function() {
 }, FRAME_INTERVAL);
 
 function add_size() {
-    return Math.pow(Object.keys(sids).length + food.length - 1, .5) * 50;
+    return Math.pow(Object.keys(sids).length + food.length - 1, .7) * 50;
 }
 
 io.sockets.on('connection', function(socket){

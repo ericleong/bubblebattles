@@ -10,7 +10,7 @@ var filterStrength = 20,
 
 var general = {
     DEBUG: false,
-    HOST_URI: 'http://bubblebattles.jit.su/',
+    HOST_URI: 'localhost',
     CONN_OPTIONS: {'transports':['websocket']},
     FRAME_INTERVAL: 16,
     WORLD_H: 300,
