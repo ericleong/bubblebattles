@@ -1,7 +1,6 @@
-"thegrid" was a quick project which was created to test HTML5's <canvas>, node.js, and socket.io.
+bubblebattles is a hackNY Fall 2012 hack focused on bringing bubble consumption to the world of massive multiplayer online games!
 
-As it stands, socket.io is configured to only work with the "websocket" transport, because any other method of transport is too slow for this kind of webapp.
-
+Inspired by Bubbles (http://www.fullstackoptimization.com/bubbles/) and built on top of "thegrid" (https://github.com/azlyth/thegrid)
 
 To get started simply install the dependencies, 
   
@@ -16,5 +15,8 @@ and start the server
 
     node grid-server.js
 
+and visit 
 
-Then open `grid.html` in various browser windows.
+	localhost:8080
+
+in your browser.
