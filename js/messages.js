@@ -1,8 +1,8 @@
 function updateStatus(){
-    $('#numusers')[0].innerHTML = 'players online: ' + (ids.length / 3);
+    $('#numusers')[0].innerHTML = 'players online: ' + ((ids.length - 1) / 3);
 
-    general.ADD_W = Math.pow(ids.length, .5) * 50;
-    general.ADD_H = Math.pow(ids.length, .5) * 50;
+    general.ADD_W = Math.pow(ids.length, .7) * 50;
+    general.ADD_H = Math.pow(ids.length, .7) * 50;
 }
 
 function input(promptstring, func)

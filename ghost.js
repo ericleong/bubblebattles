@@ -4,9 +4,9 @@
     }
 
     var respawn = function(me, total_world_w, total_world_h) {
-        var radius = 6;
+        var radius = 5;
         var angle = Math.random() * 2 * Math.PI;
-        var mag = Math.random() * .5 + 1.5;
+        var mag = Math.random() * .25 + 1;
 
         if (Math.random() >= .5) {
             // top or bottom
@@ -37,7 +37,7 @@
 
         /* Detect collision against walls */
 
-        add_w = add_h = Math.pow(ids.length + ghosts.length - 1, .5) * 50;
+        add_w = add_h = Math.pow(ids.length + ghosts.length - 1, .7) * 50;
 
         // Left/right walls
         if (me.world_x - me.radius < -add_w) {
@@ -62,7 +62,7 @@
     module.exports.add = function(sockets, ghosts, total_world_w, total_world_h) {
         var radius = 6;
         var angle = Math.random() * 2 * Math.PI;
-        var mag = Math.random() * .5 + 1.5;
+        var mag = Math.random() * .25 + 1;
 
         ghost = {
             id: ghosts.length,
