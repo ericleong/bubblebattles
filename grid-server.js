@@ -70,11 +70,8 @@ io.sockets.on('connection', function(socket){
             ghost.add(io.sockets, food);
 
             request.name = request.name.substring(0,15);
-<<<<<<< HEAD
 
-            /* send info about other users to client */
-            for(var i in sids){
-=======
+            /* send info about food to client */
             for (var i = 0; i < food.length; i++) {
                 socket.send(json({
                     action:'conn',
@@ -86,8 +83,8 @@ io.sockets.on('connection', function(socket){
                     y: food[i].world_y
                 }));
             }
-            for(i in sids){
->>>>>>> feature
+            /* send info about other users to client */
+            for (i in sids) {
                 var s = sids[i];
                 socket.send(json({
                     action:'conn',
