@@ -70,6 +70,15 @@
         return ghost;
     }
 
+    module.exports.remove = function(sockets, ghosts) {
+        ghost = ghosts.pop();
+        sockets.send(JSON.stringify({
+            action: 'close',
+            id: ghost.id,
+        }));
+        return ghost;
+    }
+
     module.exports.update = function(sockets, ghosts, ids, users) {
         for (var i = 0; i < ghosts.length; i++) {
             ghosts[i].world_x += ghosts[i].vx;

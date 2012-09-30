@@ -66,6 +66,9 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'conn') {
+            ghost.add(io.sockets, food);
+            ghost.add(io.sockets, food);
+
             request.name = request.name.substring(0,15);
             for (var i = 0; i < food.length; i++) {
                 socket.send(json({
@@ -171,6 +174,9 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('disconnect', function(){
+        ghost.remove(io.sockets, food);
+        ghost.remove(io.sockets, food);
+
         io.sockets.send(json({'id': socket.id, 'action': 'close'}));
 
         if (sids.indexOf(socket.id) != -1) {
