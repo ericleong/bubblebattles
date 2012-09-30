@@ -24,21 +24,6 @@ var food = new Array();
 server.listen(8080);
 var io = sio.listen(server);
 
-
-/* HB HEARTBEAT SERVER */
-var hb = require("./heartbeat.js");
-var hb_server = hb.server(); 
-
-// run!!
-setInterval(function() { 
-    hb_server.broadcast();
-    hb_server.find_zombies(15000, function(zombie) {
-        console.log("Found a zombie: "+zombie.hbtime);
-    });
-}, 
-2*1000);
-
-
 /* SOCKET IO */
 
 io.configure('production', function(){
