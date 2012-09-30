@@ -173,20 +173,21 @@ io.sockets.on('connection', function(socket){
         }
 
 
-        if(request.action == 'info') {
-            /*console.log("\nINFO\n");
-            console.log("Total clients: " + sids.length);
-            console.log("Kicked: " + kicked);
-            console.log("");
-            for (i in sids){
-                s = sids[i];
-                console.log("sid: " + s);
-                console.log("ip: " + users[s].ip);
-                console.log("name: " + users[s].name);
-                console.log("color: " + users[s].color);
-                console.log("pos: " + users[s].x + ", " + users[s].y);
-                console.log("");
-            }*/
+        if(request.action == 'disconn') {
+            io.sockets.send(json({'id': socket.id, 'action': 'close'}));
+
+            if (sids.indexOf(socket.id) != -1) {
+                ghost.remove(io.sockets, food);
+                ghost.remove(io.sockets, food);
+
+                currentTime = new Date();
+                //var access = fs.createWriteStream('/home/azlyth/thegrid/access.log', {flags:'a'});
+                //access.write("[" + currentTime.toUTCString() + "] " + users[socket.id].name + " (SID: " + socket.id + " IP: " + socket.ip +") disconnected.\n");
+                sids.splice(sids.indexOf(socket.id),1);
+                delete users[socket.id];
+            } else {
+                console.log("on dc, cannot find: " + socket.id);
+            }
         }
 
         if(request.action == 'thekick' || request.action == 'theban') {
@@ -212,12 +213,12 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('disconnect', function(){
-        ghost.remove(io.sockets, food);
-        ghost.remove(io.sockets, food);
-
         io.sockets.send(json({'id': socket.id, 'action': 'close'}));
 
         if (sids.indexOf(socket.id) != -1) {
+            ghost.remove(io.sockets, food);
+            ghost.remove(io.sockets, food);
+
             currentTime = new Date();
             //var access = fs.createWriteStream('/home/azlyth/thegrid/access.log', {flags:'a'});
             //access.write("[" + currentTime.toUTCString() + "] " + users[socket.id].name + " (SID: " + socket.id + " IP: " + socket.ip +") disconnected.\n");

@@ -27,6 +27,15 @@ function respawn() {
 
 function init(name) {
     socket = io.connect(general.HOST_URI, general.CONN_OPTIONS);
+
+    $(window).focus(function() {
+        document.location.reload(true);
+    })
+
+    $(window).blur(function() {
+        socket.disconnect();
+    })
+
     me.name = "";
     me.color = "#555555";
     me.x = canvas.width / 2;
