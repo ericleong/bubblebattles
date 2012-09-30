@@ -11,7 +11,10 @@ var sys = require('sys'),
 var sids = new Array();
 var users = new Array();
 var kicked = new Array();
-var colors = ['#05FDFD', '#FA7005']
+
+var cyan = '#05FDFD';
+var orange = '#FA7005';
+var colors = [cyan, orange];
 var accepted_actions = ['move', 'speak', 'conn', 'info', 'thekick', 'theban'];
 var currentTime;
 var WORLD_W = 600,
@@ -70,8 +73,8 @@ io.sockets.on('connection', function(socket){
                     y: users[s].y
                 }));
             }
-            request.color = colors[Math.round(Math.random())];
             request.radius = Math.random() * 10 + 4;
+            request.color = colors[0];
 
             socket.send(json({
                     action:'me',

@@ -1,5 +1,9 @@
 var socket;
 
+var cyan = '#05FDFD';
+var orange = '#FA7005';
+var colors = [cyan, orange];
+
 var filterStrength = 20,
     frameTime = 0, 
     lastLoop = new Date, thisLoop = 0;
@@ -44,6 +48,6 @@ var physics = {
 
 var me = {};
 var ids = new Array();
-var users = new Array();
+var users = {};
 var context;
 var img = new Image();

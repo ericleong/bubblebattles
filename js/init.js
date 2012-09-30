@@ -27,6 +27,7 @@ function init(name) {
             } else if (data.action == 'speak') {
                 onspeak(data);
             } else if (data.action == 'conn') {
+                console.log(data);
                 otherconn(data);
             } else if (data.action == 'close') {
                 otherremove(data);

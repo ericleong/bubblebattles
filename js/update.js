@@ -73,6 +73,7 @@ function othermove(data) {
        users[data.id].world_x = data.x;
        users[data.id].world_y = data.y;
        users[data.id].radius = data.radius;
+       users[data.id].color = data.color;
     } else {
         ids.push(data.id);
         users[data.id] = {
