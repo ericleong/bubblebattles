@@ -25,8 +25,8 @@
 
         /* Detect collision against walls */
 
-        add_w = Object.keys(sids).length * 100;
-        add_h = Object.keys(sids).length * 100;
+        add_w = ids.length * 100;
+        add_h = ids.length * 100;
 
         // Left/right walls
         if (me.world_x - me.radius < -add_w) {
