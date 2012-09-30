@@ -72,10 +72,12 @@
 
     module.exports.remove = function(sockets, ghosts) {
         ghost = ghosts.pop();
-        sockets.send(JSON.stringify({
-            action: 'close',
-            id: ghost.id,
-        }));
+        if (ghost) {
+            sockets.send(JSON.stringify({
+                action: 'close',
+                id: ghost.id,
+            }));
+        }
         return ghost;
     }
 
