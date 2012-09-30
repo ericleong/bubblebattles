@@ -1,10 +1,5 @@
 function colDetect() {
     var objects = physics.objects;
-    var coords;
-    var p1, p2, p3, p4, ua, ub, numera, numerb, denom;
-    var colliding = false;
-    p1 = [me.world_x, me.world_y];
-    p2 = [me.world_x+physics.xvel, me.world_y+physics.yvel];
 
     if (me) {
         for (var i = 0; i < ids.length; i++) {
@@ -22,28 +17,116 @@ function colDetect() {
     /* Detect collision against walls */
 
     // Left/right walls
-    me.world_x += physics.xvel;
     if (me.world_x - me.radius < 0) {
         me.world_x = 0 + me.radius; 
-        physics.xvel *= -physics.restitution; 
+        me.vx *= -physics.restitution; 
     } else if (me.world_x + me.radius > general.WORLD_W) { 
         me.world_x = general.WORLD_W - me.radius; 
-        physics.xvel *= -physics.restitution;
+        me.vx *= -physics.restitution;
     } 
     
     // Top/bottom walls
-    me.world_y += physics.yvel;
     if (me.world_y - me.radius < 0) { 
         me.world_y = 0 + me.radius; 
-        physics.yvel *= -physics.restitution; 
+        me.vy *= -physics.restitution; 
     }
     else if (me.world_y + me.radius > general.WORLD_H) { 
         me.world_y = general.WORLD_H - me.radius; 
-        physics.yvel *= -physics.restitution;
+        me.vy *= -physics.restitution;
     }
 }
 
 function isTouching(x1, y1, x2, y2, distance) {
     //console.log(Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)));
     return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)) < distance;
+}
+
+function acceleration(state, t) {
+    // should actually be a force, but there is no mass
+    var ax = 0, ay = 0;
+
+    if ( (control.rightDown ? !control.leftDown : control.leftDown) && 
+        (control.upDown ? !control.downDown : control.downDown)) {
+        // Diagonal movement
+
+        var diagaccel = physics.accel * (1 / Math.sqrt(2));
+        if (control.rightDown) ax += diagaccel;
+        if (control.leftDown) ax -= diagaccel;
+        if (control.upDown) ay -= diagaccel;
+        if (control.downDown) ay += diagaccel;
+    } else {
+        if (control.rightDown) ax += physics.accel;
+        if (control.leftDown) ax -= physics.accel;
+        if (control.upDown) ay -= physics.accel;
+        if (control.downDown) ay += physics.accel;
+    }
+
+    return {
+        vx: - physics.fric * state.vx + ax,
+        vy: - physics.fric * state.vy + ay
+    };
+}
+
+function evaluate(initial, t, dt, d) {
+    var state = {
+        x: initial.x + d.dx * dt,
+        y: initial.y + d.dy * dt,
+        vx: initial.vx + d.dvx * dt,
+        vy: initial.vy + d.dvy * dt
+    };
+
+    var a = acceleration(state, t + dt);
+
+    return {
+        dx: state.vx,
+        dy: state.vy,
+        dvx: a.vx,
+        dvy: a.vy
+    };
+}
+
+function integrate(state, t, dt) {
+    var a = evaluate(state, t, 0, {dx: 0, dy: 0, dvx: 0, dvy: 0});
+    var b = evaluate(state, t, dt*.5, a);
+    var c = evaluate(state, t, dt*.5, b);
+    var d = evaluate(state, t, dt, c);
+
+    var dxdt = 1/6 * (a.dx + 2*(b.dx + c.dx) + d.dx);
+    var dydt = 1/6 * (a.dy + 2*(b.dy + c.dy) + d.dy);
+    var dvxdt = 1/6 * (a.dvx + 2*(b.dvx + c.dvx) + d.dvx);
+    var dvydt = 1/6 * (a.dvy + 2*(b.dvy + c.dvy) + d.dvy);
+
+    return {
+        x: state.x + dxdt * dt,
+        y: state.y + dydt * dt,
+        vx: state.vx + dvxdt * dt,
+        vy: state.vy + dvydt * dt
+    }
+}
+
+function move()
+{
+    var cur = {
+        x: me.world_x,
+        y: me.world_y,
+        vx: me.vx,
+        vy: me.vy
+    };
+
+    var next = integrate(cur, 0, 1);
+
+    me.world_x = next.x;
+    me.world_y = next.y;
+    me.vx = next.vx;
+    me.vy = next.vy;
+
+    colDetect();
+    
+    //send the data
+    socket.send(JSON.stringify({
+        action: 'move',
+        x: me.world_x,
+        y: me.world_y,
+        radius: me.radius
+    }));
 }

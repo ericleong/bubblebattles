@@ -39,11 +39,9 @@ var canvas = {
 
 var physics = {
     objects: new Array(),
-    accel: 50 * (general.FRAME_INTERVAL/1000),
-    fric: 30 * (general.FRAME_INTERVAL/1000),
-    restitution: 0.6,
-    xvel: 0,
-    yvel: 0
+    accel: 100 * (general.FRAME_INTERVAL/1000),
+    fric: 2 * (general.FRAME_INTERVAL/1000),
+    restitution: 0.6
 };
 
 var me = {};

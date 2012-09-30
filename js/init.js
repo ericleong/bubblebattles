@@ -6,6 +6,8 @@ function init(name) {
     me.y = canvas.height/2;
     me.world_x = 300;
     me.world_y = 300;
+    me.vx = 0;
+    me.vy = 0;
     me.radius = general.USER_RADIUS;
     centerCamera();
 
