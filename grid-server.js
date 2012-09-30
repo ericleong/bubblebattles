@@ -39,7 +39,7 @@ app.get('/', function(req, res) {
 
 ghost.add(io.sockets, food);
 setInterval(function() {
-    ghost.update(io.sockets, food);
+    ghost.update(io.sockets, food, sids, users);
 }, FRAME_INTERVAL);
 
 io.sockets.on('connection', function(socket){
