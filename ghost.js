@@ -1,9 +1,9 @@
 (function() {
-    function isTouching(x1, y1, x2, y2, distance) {
+    var isTouching = function(x1, y1, x2, y2, distance) {
         return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)) < distance;
     }
 
-    function respawn(me) {
+    var respawn = function(me) {
         me.world_x = 300;
         me.world_y = 300;
         me.vx = 1;

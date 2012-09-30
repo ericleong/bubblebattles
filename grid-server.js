@@ -37,7 +37,7 @@ app.get('/', function(req, res) {
     res.sendfile(__dirname + '/grid.html');
 });
 
-ghost.add(io.sockets, food);
+ghost.add(io.sockets, food, WORLD_W, WORLD_H);
 setInterval(function() {
     ghost.update(io.sockets, food, sids, users);
 }, FRAME_INTERVAL);
@@ -67,8 +67,10 @@ io.sockets.on('connection', function(socket){
 
         if(request.action == 'conn') {
             
-            ghost.add(io.sockets, food, WORLD_W, WORLD_H);
-            ghost.add(io.sockets, food, WORLD_W, WORLD_H);
+            add_w = Math.pow(Object.keys(sids).length, .5) * 50;
+            add_h = Math.pow(Object.keys(sids).length, .5) * 50;
+            ghost.add(io.sockets, food, WORLD_W + add_w, WORLD_H + add_h);
+            ghost.add(io.sockets, food, WORLD_W + add_w, WORLD_H + add_h);
 
             request.name = request.name.substring(0,15);
 
