@@ -38,6 +38,8 @@ function init(name) {
                 me.id = data.id;
                 me.color = data.color;
                 me.radius = data.radius;
+                me.world_x = data.x;
+                me.world_y = data.y;
             }
         });
         socket.on('disconnect', function(){

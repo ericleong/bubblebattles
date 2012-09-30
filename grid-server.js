@@ -58,7 +58,9 @@ io.sockets.on('connection', function(socket){
 
         if(request.action == 'conn') {
             request.name = request.name.substring(0,15);
-            for(i in sids){
+
+            /* send info about other users to client */
+            for(var i in sids){
                 var s = sids[i];
                 socket.send(json({
                     action:'conn',
@@ -70,18 +72,41 @@ io.sockets.on('connection', function(socket){
                     y: users[s].y
                 }));
             }
+
+            /* determine info for this client */
             request.radius = Math.random() * 10 + 4;
             var rgb = hsvToRgb(10 * (Object.keys(sids).length * 743 % 36), 
                 5 * (Object.keys(sids).length * -343 % 4) + 80, 
                 5 * (Object.keys(sids).length * 233 % 8) + 40);
             request.color = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
 
+            var good = false;
+
+            while (!good) {
+                request.x = Math.random() * (WORLD_W - 2 * request.radius) + request.radius;
+                request.y = Math.random() * (WORLD_Y - 2 * request.radius) + request.radius;
+                
+                good = true;
+                for(var i in sids){
+                    var s = sids[i];
+                    if (Math.pow(users[s].x - request.x, 2) + 
+                        Math.pow(users[s].y - request.y, 2) <
+                        request.radius + users[s].radius) {
+
+                        good = false;
+                        break;
+                    }
+                }
+            }
+
             socket.send(json({
                     action:'me',
                     id: socket.id,
                     name: request.name,
                     color: request.color,
-                    radius: request.radius
+                    radius: request.radius,
+                    x: request.x,
+                    y: request.y
             }));
 
             //var access = fs.createWriteStream('/home/azlyth/thegrid/access.log', {flags:'a'});
