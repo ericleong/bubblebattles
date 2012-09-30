@@ -89,7 +89,7 @@
             ghosts[i].world_x += ghosts[i].vx;
             ghosts[i].world_y += ghosts[i].vy;
 
-            colDetect(ghosts[i], ids, users, 600, 600);
+            colDetect(ghosts[i], ids, users, 300, 300);
 
             sockets.send(JSON.stringify({
                 id: ghosts[i].id,

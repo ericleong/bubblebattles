@@ -10,18 +10,16 @@ var filterStrength = 20,
 
 var general = {
     DEBUG: false,
-    HOST_URI: 'http://bubblebattles.jit.su/',
+    HOST_URI: 'localhost',
     CONN_OPTIONS: {'transports':['websocket']},
     FRAME_INTERVAL: 16,
-    WORLD_H: 600,
-    WORLD_W: 600,
+    WORLD_H: 300,
+    WORLD_W: 300,
     CHAT_DURATION: 8000,
     CHAT_WIDTH: 250,
     USER_RADIUS: 5,
     USER_MIN_RADIUS: 5,
     retrying: false,
-    world_w: 600,
-    world_h: 600
 };
 
 var control = {

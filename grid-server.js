@@ -14,8 +14,8 @@ var kicked = new Array();
 
 var accepted_actions = ['move', 'speak', 'conn', 'info', 'thekick', 'theban'];
 var currentTime;
-var WORLD_W = 600,
-    WORLD_H = 600;
+var WORLD_W = 300,
+    WORLD_H = 300;
     FRAME_INTERVAL = 16;
 
 var ghost = require('./ghost');
