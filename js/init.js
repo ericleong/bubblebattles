@@ -3,7 +3,7 @@ function respawn() {
     me.y = canvas.height / 2;
     me.vx = 0;
     me.vy = 0;
-    me.radius = Math.random() + 7;
+    me.radius = Math.random() + 10;
 
     var good = false;
 
