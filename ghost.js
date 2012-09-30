@@ -25,8 +25,8 @@
 
         /* Detect collision against walls */
 
-        add_w = ids.length * 100;
-        add_h = ids.length * 100;
+        add_w = Math.pow(ids.length, .5) * 50;
+        add_h = Math.pow(ids.length, .5) * 50;
 
         // Left/right walls
         if (me.world_x - me.radius < -add_w) {
@@ -96,7 +96,7 @@
             ghosts[i].world_x += ghosts[i].vx;
             ghosts[i].world_y += ghosts[i].vy;
 
-            colDetect(ghosts[i], ids, users, 600, 600);
+            colDetect(ghosts[i], ids, users, 300, 300);
 
             sockets.send(JSON.stringify({
                 id: ghosts[i].id,
