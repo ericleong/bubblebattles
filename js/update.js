@@ -122,6 +122,8 @@ function draw()
     }
     context.stroke();
         
+    updateStatus();
+
     otherdraw();
 
     /* Draw this user */
