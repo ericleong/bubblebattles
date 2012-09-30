@@ -1,5 +1,5 @@
 function updateStatus(){
-    $('#numusers')[0].innerHTML = 'Users online: ' + (ids.length + 1);
+    $('#numusers')[0].innerHTML = 'Users online: ' + ((ids.length - 1) / 2);
 
     general.ADD_W = Math.pow(ids.length, .5) * 50;
     general.ADD_H = Math.pow(ids.length, .5) * 50;

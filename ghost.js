@@ -15,7 +15,7 @@
         me.radius = radius;
     }
 
-    var colDetect = function(me, ids, users, WORLD_W, WORLD_H) {
+    var colDetect = function(me, ghosts, ids, users, WORLD_W, WORLD_H) {
         if (me) {
             for (var i = 0; i < ids.length; i++) {
                 var user = users[ids[i]];
@@ -29,8 +29,7 @@
 
         /* Detect collision against walls */
 
-        add_w = Math.pow(ids.length, .5) * 50;
-        add_h = Math.pow(ids.length, .5) * 50;
+        add_w = add_h = Math.pow(ids.length + ghosts.length, .5) * 50;
 
         // Left/right walls
         if (me.world_x - me.radius < -add_w) {
@@ -100,7 +99,7 @@
             ghosts[i].world_x += ghosts[i].vx;
             ghosts[i].world_y += ghosts[i].vy;
 
-            colDetect(ghosts[i], ids, users, 300, 300);
+            colDetect(ghosts[i], ghosts, ids, users, 300, 300);
 
             sockets.send(JSON.stringify({
                 id: ghosts[i].id,
