@@ -15,17 +15,3 @@ function onKeyUp(evt) {
         if (evt.which == 40 || evt.which == 83) control.downDown = false;;
     }
 }
-
-function onKeyPress(evt) {
-    if (control.typing) {
-        if (evt.which == 13) sendchat();
-    } else {
-        if (evt.which ==13) {
-            $(document).one("keyup", function(evt){
-                if (evt.which == 13)
-                    showchat();
-            });
-        }
-        if (evt.which == 108) togglelog();
-    }
-}

@@ -9,8 +9,8 @@ var general = {
     HOST_URI: '127.0.0.1:8080',
     CONN_OPTIONS: {'transports':['websocket']},
     FRAME_INTERVAL: 16,
-    WORLD_H: 1500,
-    WORLD_W: 1500,
+    WORLD_H: 600,
+    WORLD_W: 600,
     CHAT_DURATION: 8000,
     CHAT_WIDTH: 250,
     USER_RADIUS: 5,
@@ -89,20 +89,6 @@ function onKeyUp(evt) {
         if (evt.which == 37 || evt.which == 65) control.leftDown = false;;
         if (evt.which == 38 || evt.which == 87) control.upDown = false;;
         if (evt.which == 40 || evt.which == 83) control.downDown = false;;
-    }
-}
-
-function onKeyPress(evt) {
-    if (control.typing) {
-        if (evt.which == 13) sendchat();
-    } else {
-        if (evt.which ==13) {
-            $(document).one("keyup", function(evt){
-                if (evt.which == 13)
-                    showchat();
-            });
-        }
-        if (evt.which == 108) togglelog();
     }
 }
 

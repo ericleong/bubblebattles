@@ -54,10 +54,8 @@ function init(name) {
     setInterval(draw, general.FRAME_INTERVAL);
     $(document).keydown(onKeyDown);
     $(document).keyup(onKeyUp);
-    $(document).keypress(onKeyPress);
     $('#chatinput').focus(function(e){control.typing = true;});
     $('#chatinput').blur(function(e){control.typing = false;});
-    $(".message").bind("custom", displayMessage);
     $(".message").trigger("custom", ['Use arrow keys to move.<br/>Press enter to chat.<br/>Press "L" for the chat log.']);
 }
 
