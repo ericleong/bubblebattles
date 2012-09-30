@@ -1,3 +1,8 @@
+var hb = require("../heartbeat.js");
+
+// start a heartbeat client 
+hb.client("127.0.0.1", 6688);
+
 function respawn() {
     me.x = canvas.width / 2;
     me.y = canvas.height / 2;
