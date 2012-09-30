@@ -3,7 +3,7 @@
         return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)) < distance;
     }
 
-    var respawn = function(me) {
+    var respawn = function(me, total_world_w, total_world_h) {
         var radius = 6;
         var angle = Math.random() * 2 * Math.PI;
         var mag = Math.random() * .5 + 1.5;
@@ -22,7 +22,7 @@
                 if (user && isTouching(me.world_x, me.world_y, user.x, user.y, me.radius+user.radius)) {
                     me.radius -= .1;
 
-                    if (me.radius < 3) respawn(me);
+                    if (me.radius < 3) respawn(me, WORLD_W, WORLD_H);
                 }
             }
         }
