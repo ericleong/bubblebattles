@@ -63,6 +63,7 @@ function otherdraw()
 function otherconn(data) {
     var username = data.name.replace("&lt;", "<").replace("&gt;",">");
     var sid = data.id;
+    console.log(sid);
     if (ids.indexOf(sid) != -1) {
         users[sid].name = username;
         users[sid].world_x = data.x;

@@ -15,7 +15,11 @@ var kicked = new Array();
 var accepted_actions = ['move', 'speak', 'conn', 'info', 'thekick', 'theban'];
 var currentTime;
 var WORLD_W = 600,
-    WORLD_Y = 600;
+    WORLD_Y = 600,
+    FRAME_INTERVAL = 16;
+
+var ghost = require('./ghost');
+var food = new Array();
 
 server.listen(8080);
 var io = sio.listen(server);
@@ -32,6 +36,11 @@ app.configure(function() {
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/grid.html');
 });
+
+ghost.add(io.sockets, food);
+setInterval(function() {
+    ghost.update(io.sockets, food);
+}, FRAME_INTERVAL);
 
 io.sockets.on('connection', function(socket){
     socket.ip = socket.handshake.address.address;
@@ -58,6 +67,17 @@ io.sockets.on('connection', function(socket){
 
         if(request.action == 'conn') {
             request.name = request.name.substring(0,15);
+            for (var i = 0; i < food.length; i++) {
+                socket.send(json({
+                    action:'conn',
+                    id: food[i].id,
+                    name: food[i].name,
+                    color: food[i].color,
+                    radius: food[i].radius,
+                    x: food[i].world_x,
+                    y: food[i].world_y
+                }));
+            }
             for(i in sids){
                 var s = sids[i];
                 socket.send(json({
