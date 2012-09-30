@@ -70,7 +70,7 @@ io.sockets.on('connection', function(socket){
                     y: users[s].y
                 }));
             }
-            request.radius = Math.random() * 10 + 4;
+            request.radius = Math.random() * 10 + 5;
             var rgb = hsvToRgb(10 * (Object.keys(sids).length * 743 % 36), 
                 5 * (Object.keys(sids).length * -343 % 4) + 80, 
                 5 * (Object.keys(sids).length * 233 % 8) + 40);
