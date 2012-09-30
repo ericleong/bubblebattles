@@ -1,3 +1,13 @@
+function respawn() {
+    me.x = canvas.width/2;
+    me.y = canvas.height/2;
+    me.world_x = 300;
+    me.world_y = 300;
+    me.vx = 0;
+    me.vy = 0;
+    me.radius = Math.random() * 10 + 5;
+}
+
 function init(name) {
     socket = io.connect(general.HOST_URI, general.CONN_OPTIONS);
     me.name = "";

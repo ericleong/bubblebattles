@@ -5,11 +5,13 @@ function colDetect() {
         for (var i = 0; i < ids.length; i++) {
             var user = users[ids[i]];
             if (user && isTouching(me.world_x, me.world_y, user.world_x, user.world_y, me.radius+user.radius)) {
-                console.log(me.radius);
                 if (me.radius > user.radius)
                     me.radius += 1 / Math.pow(me.radius, 1);
                 else
                     me.radius -= .1;
+
+                if (me.radius < general.USER_MIN_RADIUS)
+                    respawn();
             }
         }
     }
@@ -62,8 +64,8 @@ function acceleration(state, t) {
     }
 
     return {
-        vx: - physics.fric * state.vx + ax,
-        vy: - physics.fric * state.vy + ay
+        vx: - Math.pow(me.radius, .5) * physics.fric * state.vx + ax,
+        vy: - Math.pow(me.radius, .5) * physics.fric * state.vy + ay
     };
 }
 
