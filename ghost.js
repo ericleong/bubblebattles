@@ -25,22 +25,25 @@
 
         /* Detect collision against walls */
 
+        add_w = Object.keys(sids).length * 100;
+        add_h = Object.keys(sids).length * 100;
+
         // Left/right walls
-        if (me.world_x - me.radius < 0) {
-            me.world_x = 0 + me.radius; 
+        if (me.world_x - me.radius < -add_w) {
+            me.world_x = -add_w + me.radius; 
             me.vx *= -1; 
-        } else if (me.world_x + me.radius > WORLD_W) { 
-            me.world_x = WORLD_W - me.radius; 
+        } else if (me.world_x + me.radius > WORLD_W + add_w) { 
+            me.world_x = WORLD_W + add_w - me.radius; 
             me.vx *= -1;
         } 
 
         // Top/bottom walls
-        if (me.world_y - me.radius < 0) { 
-            me.world_y = 0 + me.radius; 
+        if (me.world_y - me.radius < -add_h) { 
+            me.world_y = -add_h + me.radius; 
             me.vy *= -1; 
         }
-        else if (me.world_y + me.radius > WORLD_H) { 
-            me.world_y = WORLD_H - me.radius; 
+        else if (me.world_y + me.radius > WORLD_H + add_h) { 
+            me.world_y = WORLD_H + add_h - me.radius; 
             me.vy *= -1;
         }
     }
