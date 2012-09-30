@@ -1,8 +1,8 @@
 html, textarea, input {
     background-color: transparent;
-    color:#333;
+    color:#818181;
 }
-body { background: #EEEEEE; }
+body { background: #CFCFCF; }
 html, body, p {
     font-family: "Helvetica";  
     margin: 0px;
@@ -15,6 +15,22 @@ div {
 #prompt p {
     color: red;
     font-size: 9pt;
+}
+#chatinput, #chatlog {
+    visibility: hidden;
+    position:static;
+    width:600;
+}
+#chatarea {
+    width:600;
+    height:150;
+    margin-left:-300;
+    text-align: center;
+    bottom:10%;
+    left: 50%;
+}
+#chatlog {
+    height: 132;
 }
 .debug{
     display:none;
@@ -32,7 +48,7 @@ div {
 }
 .message {
     display:none;
-    color: #FFFFFF;
+    color: #000000;
     top: 30px;
     font-size: 23px;
     display: none;
