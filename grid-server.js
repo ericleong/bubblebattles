@@ -66,8 +66,9 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'conn') {
-            ghost.add(io.sockets, food);
-            ghost.add(io.sockets, food);
+            
+            ghost.add(io.sockets, food, WORLD_W, WORLD_H);
+            ghost.add(io.sockets, food, WORLD_W, WORLD_H);
 
             request.name = request.name.substring(0,15);
 

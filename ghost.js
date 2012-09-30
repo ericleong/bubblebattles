@@ -48,19 +48,25 @@
         }
     }
 
-    module.exports.add = function(sockets, ghosts) {
+    module.exports.add = function(sockets, ghosts, total_world_w, total_world_h) {
+        var radius = 5;
+        var angle = Math.random() * 2 * Math.PI;
+        var mag = Math.random() * 2 + 1;
+
         ghost = {
             id: ghosts.length,
             name: '',
             color: '#FFFFFF',
             ip: '0.0.0.0',
-            radius: 5,
-            world_x: Math.random() * 100,
-            world_y: Math.random() * 100,
-            vx: 1,
-            vy: 1
+            radius: radius,
+            world_x: Math.random() * (total_world_w - 2 * radius) + radius,
+            world_y: Math.random() * (total_world_h - 2 * radius) + radius,
+            vx: mag * Math.cos(angle),
+            vy: mag * Math.sin(angle)
         };
+
         ghosts.push(ghost);
+
         sockets.send(JSON.stringify({
             action: 'conn',
             id: ghost.id,
@@ -70,6 +76,7 @@
             x: ghost.world_x,
             y: ghost.world_y
         }));
+
         return ghost;
     }
 
