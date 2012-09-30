@@ -1,0 +1,44 @@
+html, textarea, input {
+    background-color: transparent;
+    color:#333;
+}
+body { background: #EEEEEE; }
+html, body, p {
+    font-family: "Helvetica";  
+    margin: 0px;
+}
+div {
+    z-index:10001;
+    font-weight: bold;
+    position: absolute;
+}
+#prompt p {
+    color: red;
+    font-size: 9pt;
+}
+.debug{
+    display:none;
+    left: 10px;
+}
+.error{
+    width:400px;
+    margin-left:-150px;
+    left:50%;
+    bottom:40px;
+}
+.general{
+    top: 20px;
+    right: 10px;
+}
+.message {
+    display:none;
+    color: #FFFFFF;
+    top: 30px;
+    font-size: 23px;
+    display: none;
+    background-color: #EEEEEE;
+    text-align: center;
+    padding: 10px;
+    width: 300px;
+    border: 1px;
+}

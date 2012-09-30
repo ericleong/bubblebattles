@@ -9,11 +9,11 @@ var general = {
     HOST_URI: '127.0.0.1:8080',
     CONN_OPTIONS: {'transports':['websocket']},
     FRAME_INTERVAL: 16,
-    WORLD_H: 1500,
-    WORLD_W: 1500,
+    WORLD_H: 800,
+    WORLD_W: 800,
     CHAT_DURATION: 8000,
     CHAT_WIDTH: 250,
-    USER_RADIUS: 5,
+    USER_RADIUS: 6,
     retrying: false,
 };
 
@@ -54,14 +54,7 @@ function onResize() {
     me.x = canvas.width/2;
     me.y = canvas.height/2;
 
-    msgbox = $(".message");
-    msgbox.css("left", (canvas.width - msgbox.width())/2 + "px");
     $("#prompt").css("left", (canvas.width - $("#prompt").width())/2 + "px");
-    if (canvas.width <= 750) {
-        $("#chatarea").width(.8 * canvas.width).css("margin-left", -0.4*canvas.width);
-        $("#chatlog").width(.8 * canvas.width);
-        $("#chatinput").width(.8 * canvas.width);
-    }
 }
 
 function centerCamera() {
@@ -90,26 +83,6 @@ function onKeyUp(evt) {
         if (evt.which == 38 || evt.which == 87) control.upDown = false;;
         if (evt.which == 40 || evt.which == 83) control.downDown = false;;
     }
-}
-
-function onKeyPress(evt) {
-    if (control.typing) {
-        if (evt.which == 13) sendchat();
-    } else {
-        if (evt.which ==13) {
-            $(document).one("keyup", function(evt){
-                if (evt.which == 13)
-                    showchat();
-            });
-        }
-        if (evt.which == 108) togglelog();
-    }
-}
-
-function displayMessage(evt, msg) {
-    msgbox = $('.message');
-    msgbox[0].innerHTML = msg;
-    msgbox.delay(500).show("fold",500).delay(5000).hide("fold",500);
 }
 
 function friction()
@@ -399,8 +372,9 @@ function input(promptstring, func)
             var entered = $("[name='input']")[0].value;
             while(entered[entered.length-1] === " " || entered[entered.length-1] === "\n")
                 entered = entered.substring(0,entered.length-1);
+            var inputDiv = this;
             if (entered)
-                setTimeout(function(){func(entered); $("#prompt").remove();},0);
+                setTimeout(function(){func(entered); $('#prompt').remove();},0);
             else $("#prompt p")[0].innerHTML = "Invalid username."
         }
     });
@@ -415,97 +389,6 @@ function onconnect(name) {
         y: me.world_y
     }));
 }
-
-function onspeak(data) {
-    var chat = data.chat.replace("&lt;", "<").replace("&gt;",">");
-    if(data.id == me.id) {
-        clearTimeout(me.chattid);
-        me.chat = chat;
-        $('#chatlog')[0].value += "\n" + me.name + ": " + chat;
-        if(!$('#chatlog:focus')[0])
-            $("#chatlog")[0].scrollTop = $("#chatlog")[0].scrollHeight;
-        me.chattid = setTimeout(function(){me.chat = '';}, general.CHAT_DURATION);
-    } else if (users[data.id]) {
-        clearTimeout(users[data.id].chattid);
-        users[data.id]['chat'] = chat;
-        $('#chatlog')[0].value += "\n" + users[data.id]['name'] + ": " + chat;
-        if(!$('#chatlog:focus')[0])
-            $("#chatlog")[0].scrollTop = $("#chatlog")[0].scrollHeight;
-        users[data.id].chattid = setTimeout(function(){users[data.id]['chat'] = '';}, general.CHAT_DURATION);
-    }
-}
-
-function displaychat(speaker) {
-    var wa=speaker.chat.replace("&lt;", "<").replace("&gt;",">").split(" "),
-        phraseArray=[],
-        lastPhrase="",
-        measure=0,
-        maxlength = 150;
-    
-    for (var i=0;i<wa.length;i++) {
-        var w=wa[i];
-        measure=context.measureText(lastPhrase+w).width;
-        if (measure<general.CHAT_WIDTH) {
-            lastPhrase+=(w+" ");
-        }else {
-            if(context.measureText(w).width > general.CHAT_WIDTH) {
-                var wlen = context.measureText(w).width;
-                var space = general.CHAT_WIDTH - context.measureText(lastPhrase + " ").width;
-                var index = Math.floor(space/Math.ceil(wlen/w.length));
-                phraseArray.push(w.substring(0,index));
-                wa.splice(i+1,0,w.substring(index,w.length));
-            } else {
-                if (lastPhrase[lastPhrase.length-1] == " ")
-                    lastPhrase = lastPhrase.substring(0,lastPhrase.length-1);
-                phraseArray.push(lastPhrase);
-                lastPhrase=w+" ";
-            }
-        }
-        if (i===wa.length-1) {
-            if (lastPhrase[lastPhrase.length-1] == " ")
-                lastPhrase = lastPhrase.substring(0,lastPhrase.length-1);
-            phraseArray.push(lastPhrase);
-            break;
-        }
-    }
-
-    context.font = "15px sans-serif"; 
-    context.textAlign = "center";
-    while(phraseArray.length > 0) {
-        lastPhrase = phraseArray.splice(0,1);
-        context.fillText(lastPhrase, speaker.x, speaker.y-15-(phraseArray.length*15));
-    }
-}
-
-function togglelog() {
-    if ($("#chatlog").css("visibility") === "visible")
-        $("#chatlog").css("visibility", "hidden");
-    else
-        $("#chatlog").css("visibility", "visible");
-}
-
-function showchat() {
-    control.typing = true;
-    $("#chatinput").css("visibility","visible").focus();
-    onResize();
-}
-
-function sendchat() {
-    control.typing = false;
-
-    var entered = $("#chatinput")[0].value;
-    while(entered[entered.length-1] === " " || entered[entered.length-1] === "\n")
-        entered = entered.substring(0,entered.length-1);
-    if (!(entered === "")) {
-        socket.send(JSON.stringify({
-            action:'speak',
-            chat: entered
-        }));
-    }
-    $("#chatinput").css("visibility", "hidden").blur();
-    $("#chatinput")[0].value = '';
-}
-
 
 function init(name) {
     socket = io.connect(general.HOST_URI, general.CONN_OPTIONS);
@@ -563,10 +446,8 @@ function init(name) {
     setInterval(draw, general.FRAME_INTERVAL);
     $(document).keydown(onKeyDown);
     $(document).keyup(onKeyUp);
-    $(document).keypress(onKeyPress);
     $('#chatinput').focus(function(e){control.typing = true;});
     $('#chatinput').blur(function(e){control.typing = false;});
-    $(".message").bind("custom", displayMessage);
     $(".message").trigger("custom", ['Use arrow keys to move.<br/>Press enter to chat.<br/>Press "L" for the chat log.']);
 }
 
