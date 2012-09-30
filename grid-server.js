@@ -29,6 +29,9 @@ app.configure(function() {
     app.use(express.static(__dirname));
 });
 
+app.get('/', function(req, res) {
+    res.sendfile(__dirname + '/grid.html');
+});
 
 io.sockets.on('connection', function(socket){
     socket.ip = socket.handshake.address.address;
