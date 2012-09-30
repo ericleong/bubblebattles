@@ -64,14 +64,26 @@
         var angle = Math.random() * 2 * Math.PI;
         var mag = Math.random() * .25 + 1;
 
+        var world_x, world_y;
+
+        if (Math.random() >= .5) {
+            // top or bottom
+            world_x = Math.random() * (total_world_w - 2 * radius) + radius; 
+            world_y = Math.round(Math.random()) * (total_world_h - 2 * radius) + radius;
+        } else {
+            // left or right
+            world_x = Math.round(Math.random()) * (total_world_w - 2 * radius) + radius;
+            world_y = Math.random() * (total_world_h - 2 * radius) + radius;
+        }
+
         ghost = {
             id: ghosts.length,
             name: '',
             color: '#FFFFFF',
             ip: '0.0.0.0',
             radius: radius,
-            world_x: Math.random() * (total_world_w - 2 * radius) + radius,
-            world_y: Math.random() * (total_world_h - 2 * radius) + radius,
+            world_x: world_x,
+            world_y: world_y,
             vx: mag * Math.cos(angle),
             vy: mag * Math.sin(angle)
         };
