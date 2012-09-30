@@ -72,8 +72,8 @@ function othermove(data) {
     if (ids.indexOf(data.id) != -1) {
        users[data.id].world_x = data.x;
        users[data.id].world_y = data.y;
-       users[data.id].radius = data.radius;
-       users[data.id].color = data.color;
+       users[data.id].radius = data.radius || users[data.id].radius;
+       users[data.id].color = data.color || users[data.id].color;
     } else {
         ids.push(data.id);
         users[data.id] = {

@@ -9,8 +9,12 @@ function colDetect() {
     if (me) {
         for (var i = 0; i < ids.length; i++) {
             var user = users[ids[i]];
-            if (user && isTouching(me.world_x, me.world_y, user.world_x, user.world_y, 2*general.USER_RADIUS)) {
-                user.color = orange;
+            if (user && isTouching(me.world_x, me.world_y, user.world_x, user.world_y, me.radius+user.radius)) {
+                console.log(me.radius);
+                if (me.radius > user.radius)
+                    me.radius += 1 / Math.pow(me.radius, 1);
+                else
+                    me.radius -= .1;
             }
         }
     }
