@@ -28,6 +28,7 @@ var io = sio.listen(server);
 
 io.configure('production', function(){
     io.set('log level', 1);
+    io.set('heartbeat', true);
     io.set('transports', ['websocket']);
 });
 

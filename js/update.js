@@ -19,8 +19,6 @@ function othermove(data) {
 
 function otherremove(data)
 {
-    if (users[data.id].chattid)
-        clearTimeout(users[data.id].chattid);
     delete users[data.id];
     var index = ids.indexOf(data.id);
     if (index != -1)

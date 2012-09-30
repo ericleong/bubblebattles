@@ -1,5 +1,4 @@
 function updateStatus(){
-    console.log(ids.length);
     if (ids.length % 1 != 0)
         $('#numusers')[0].innerHTML = 'players online: ' + (ids.length / 3);
 
