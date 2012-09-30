@@ -15,10 +15,10 @@
         if (me) {
             for (var i = 0; i < ids.length; i++) {
                 var user = users[ids[i]];
-                if (user && isTouching(me.world_x, me.world_y, user.world_x, user.world_y, me.radius+user.radius)) {
+                if (user && isTouching(me.world_x, me.world_y, user.x, user.y, me.radius+user.radius)) {
                     me.radius -= .1;
 
-                    if (me.radius < 2) respawn(me);
+                    if (me.radius < 3) respawn(me);
                 }
             }
         }
@@ -29,8 +29,8 @@
         if (me.world_x - me.radius < 0) {
             me.world_x = 0 + me.radius; 
             me.vx *= -1; 
-        } else if (me.world_x + me.radius > general.WORLD_W) { 
-            me.world_x = general.WORLD_W - me.radius; 
+        } else if (me.world_x + me.radius > WORLD_W) { 
+            me.world_x = WORLD_W - me.radius; 
             me.vx *= -1;
         } 
 
@@ -39,8 +39,8 @@
             me.world_y = 0 + me.radius; 
             me.vy *= -1; 
         }
-        else if (me.world_y + me.radius > general.WORLD_H) { 
-            me.world_y = general.WORLD_H - me.radius; 
+        else if (me.world_y + me.radius > WORLD_H) { 
+            me.world_y = WORLD_H - me.radius; 
             me.vy *= -1;
         }
     }
