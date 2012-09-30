@@ -1,6 +1,6 @@
 function respawn() {
-    me.x = canvas.width/2;
-    me.y = canvas.height/2;
+    me.x = canvas.width / 2;
+    me.y = canvas.height / 2;
     me.world_x = 300;
     me.world_y = 300;
     me.vx = 0;
@@ -12,8 +12,8 @@ function init(name) {
     socket = io.connect(general.HOST_URI, general.CONN_OPTIONS);
     me.name = "";
     me.color = "#555555";
-    me.x = canvas.width/2;
-    me.y = canvas.height/2;
+    me.x = canvas.width / 2;
+    me.y = canvas.height / 2;
     me.world_x = 300;
     me.world_y = 300;
     me.vx = 0;
@@ -39,7 +39,6 @@ function init(name) {
             } else if (data.action == 'speak') {
                 onspeak(data);
             } else if (data.action == 'conn') {
-                console.log(data);
                 otherconn(data);
             } else if (data.action == 'close') {
                 otherremove(data);

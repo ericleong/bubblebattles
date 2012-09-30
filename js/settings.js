@@ -20,6 +20,8 @@ var general = {
     USER_RADIUS: 5,
     USER_MIN_RADIUS: 5,
     retrying: false,
+    world_w: 600,
+    world_h: 600
 };
 
 var control = {
@@ -32,10 +34,11 @@ var control = {
 
 var canvas = {
     obj: undefined,
-    width: 640,
+    width: 640, // window size
     height: 480,
     offset_x:0,
-    offset_y:0
+    offset_y:0,
+    borderColor: '#333'
 };
 
 var physics = {
@@ -49,4 +52,3 @@ var me = {};
 var ids = new Array();
 var users = {};
 var context;
-var img = new Image();

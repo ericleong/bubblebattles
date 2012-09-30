@@ -15,7 +15,7 @@ var kicked = new Array();
 var accepted_actions = ['move', 'speak', 'conn', 'info', 'thekick', 'theban'];
 var currentTime;
 var WORLD_W = 600,
-    WORLD_Y = 600;
+    WORLD_H = 600;
 
 server.listen(8080);
 var io = sio.listen(server);
@@ -84,7 +84,7 @@ io.sockets.on('connection', function(socket){
 
             while (!good) {
                 request.x = Math.random() * (WORLD_W - 2 * request.radius) + request.radius;
-                request.y = Math.random() * (WORLD_Y - 2 * request.radius) + request.radius;
+                request.y = Math.random() * (WORLD_H - 2 * request.radius) + request.radius;
                 
                 good = true;
                 for(var i in sids){
@@ -126,7 +126,11 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'move') {
-            if ( request.x < 0 || request.x > WORLD_W || request.y < 0 || request.y > WORLD_Y) 
+            add_w = Object.keys(sids).length * 100;
+            add_h = Object.keys(sids).length * 100;
+
+            if ( request.x < -add_w || request.x > WORLD_W + add_w
+                 || request.y < -add_h || request.y > WORLD_H + add_h) 
                 return false;
             
             if(users[socket.id]) {

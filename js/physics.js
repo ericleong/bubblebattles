@@ -19,21 +19,21 @@ function colDetect() {
     /* Detect collision against walls */
 
     // Left/right walls
-    if (me.world_x - me.radius < 0) {
-        me.world_x = 0 + me.radius; 
+    if (me.world_x - me.radius < -general.ADD_W) {
+        me.world_x = -general.ADD_W + me.radius; 
         me.vx *= -physics.restitution; 
-    } else if (me.world_x + me.radius > general.WORLD_W) { 
-        me.world_x = general.WORLD_W - me.radius; 
+    } else if (me.world_x + me.radius > general.WORLD_W + general.ADD_W) { 
+        me.world_x = general.WORLD_W + general.ADD_W - me.radius; 
         me.vx *= -physics.restitution;
     } 
     
     // Top/bottom walls
-    if (me.world_y - me.radius < 0) { 
-        me.world_y = 0 + me.radius; 
+    if (me.world_y - me.radius < -general.ADD_H) { 
+        me.world_y = -general.ADD_H + me.radius; 
         me.vy *= -physics.restitution; 
     }
-    else if (me.world_y + me.radius > general.WORLD_H) { 
-        me.world_y = general.WORLD_H - me.radius; 
+    else if (me.world_y + me.radius > general.WORLD_H + general.ADD_H) { 
+        me.world_y = general.WORLD_H + general.ADD_H - me.radius; 
         me.vy *= -physics.restitution;
     }
 }
