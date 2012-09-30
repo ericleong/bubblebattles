@@ -18,6 +18,7 @@ var general = {
     CHAT_DURATION: 8000,
     CHAT_WIDTH: 250,
     USER_RADIUS: 5,
+    USER_MIN_RADIUS: 5,
     retrying: false,
 };
 
@@ -40,7 +41,7 @@ var canvas = {
 var physics = {
     objects: new Array(),
     accel: 100 * (general.FRAME_INTERVAL/1000),
-    fric: 2 * (general.FRAME_INTERVAL/1000),
+    fric: 5 * (general.FRAME_INTERVAL/1000),
     restitution: 0.6
 };
 

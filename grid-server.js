@@ -73,7 +73,7 @@ io.sockets.on('connection', function(socket){
                     y: users[s].y
                 }));
             }
-            request.radius = Math.random() * 10 + 4;
+            request.radius = Math.random() * 10 + 5;
             request.color = colors[0];
 
             socket.send(json({
