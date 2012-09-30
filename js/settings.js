@@ -10,7 +10,7 @@ var filterStrength = 20,
 
 var general = {
     DEBUG: false,
-    HOST_URI: '127.0.0.1:8080',
+    HOST_URI: 'http://127.0.0.1:8080',
     CONN_OPTIONS: {'transports':['websocket']},
     FRAME_INTERVAL: 16,
     WORLD_H: 600,
