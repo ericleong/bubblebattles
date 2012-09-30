@@ -117,6 +117,15 @@ function otherdraw()
         context.textAlign = "center";
         context.fillText(user.name, ux, uy+18);
 
+        if (user.radius < 10) {
+            context.fillText(user.name, ux, uy+18);
+        } else if (user.radius < 30) {
+            context.fillText(user.name, ux, uy+12 + user.radius);
+        } else {
+            context.fillStyle = "white";
+            context.fillText(user.name, ux, uy+18);
+        }
+
         if (user.chat) displaychat(user);
     }
 }
