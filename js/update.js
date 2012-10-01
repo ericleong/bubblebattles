@@ -144,12 +144,6 @@ function draw()
         context.fillStyle = "white";
         context.fillText(me.name, canvas.width/2, canvas.height/2+18);
     }
-
-    if(general.DEBUG) {
-        var thisFrameTime = (thisLoop=new Date) - lastLoop;
-        frameTime+= (thisFrameTime - frameTime) / filterStrength;
-        lastLoop = thisLoop;
-    }
 }
 
 function onResize() {

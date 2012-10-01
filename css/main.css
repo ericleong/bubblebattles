@@ -59,6 +59,11 @@ div {
     color: red;
     font-size: 9pt;
 }
+
+#numusers {
+    display: none;
+}
+
 .error{
     width:400px;
     margin-left:-150px;
@@ -71,7 +76,7 @@ div {
     width: 100%;
 }
 .message {
-    display:none;
+    display: none;
     color: #333;
     margin-top: 25%;
     font-size: 24pt;

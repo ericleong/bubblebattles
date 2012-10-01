@@ -1,18 +1,17 @@
 function colDetect() {
-    var objects = physics.objects;
+    // Detects collision with rigid bodies and applies the appropriate reaction
 
-    if (me) {
-        for (var i = 0; i < ids.length; i++) {
-            var user = users[ids[i]];
-            if (user && isTouching(me.world_x, me.world_y, user.world_x, user.world_y, me.radius+user.radius)) {
-                if (me.radius > user.radius)
-                    me.radius += 1 / Math.pow(me.radius, 1);
-                else
-                    me.radius -= .1;
+    /* Detect collision against other users */
+    for (var i = 0; i < ids.length; i++) {
+        var user = users[ids[i]];
+        if (user && overlap(me.world_x, me.world_y, user.world_x, user.world_y, me.radius+user.radius)) {
+            if (me.radius > user.radius)
+                me.radius += 1 / Math.pow(me.radius, 1);
+            else
+                me.radius -= .1;
 
-                if (me.radius < general.USER_MIN_RADIUS)
-                    respawn();
-            }
+            if (me.radius < general.USER_MIN_RADIUS)
+                respawn();
         }
     }
 
@@ -38,14 +37,17 @@ function colDetect() {
     }
 }
 
-function isTouching(x1, y1, x2, y2, distance) {
+function overlap(x1, y1, x2, y2, distance) {
     return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)) < distance;
 }
 
 function acceleration(state, t) {
+    // Sums the forces to the applied on this object.
+
     // should actually be a force, but there is no mass
     var ax = 0, ay = 0;
 
+    /* Apply desired force from the user */
     if ( (control.rightDown ? !control.leftDown : control.leftDown) && 
         (control.upDown ? !control.downDown : control.downDown)) {
         // Diagonal movement
@@ -55,20 +57,24 @@ function acceleration(state, t) {
         if (control.leftDown) ax -= diagaccel;
         if (control.upDown) ay -= diagaccel;
         if (control.downDown) ay += diagaccel;
-    } else {
+    } else { // Orthogonal movement
         if (control.rightDown) ax += physics.accel;
         if (control.leftDown) ax -= physics.accel;
         if (control.upDown) ay -= physics.accel;
         if (control.downDown) ay += physics.accel;
     }
 
+    /* Also add drag force */
     return {
-        vx: - Math.pow(me.radius, .5) * physics.fric * state.vx + ax,
-        vy: - Math.pow(me.radius, .5) * physics.fric * state.vy + ay
+        dvx: - Math.pow(me.radius, .5) * physics.fric * state.vx + ax,
+        dvy: - Math.pow(me.radius, .5) * physics.fric * state.vy + ay
     };
 }
 
 function evaluate(initial, t, dt, d) {
+    // Computes the intermediate velocity and acceleration at the next step 
+    // after the initial point
+
     var state = {
         x: initial.x + d.dx * dt,
         y: initial.y + d.dy * dt,
@@ -81,12 +87,15 @@ function evaluate(initial, t, dt, d) {
     return {
         dx: state.vx,
         dy: state.vy,
-        dvx: a.vx,
-        dvy: a.vy
+        dvx: a.dvx,
+        dvy: a.dvy
     };
 }
 
 function integrate(state, t, dt) {
+    // Integrates from the given initial position
+    // http://gafferongames.com/game-physics/integration-basics/
+
     var a = evaluate(state, t, 0, {dx: 0, dy: 0, dvx: 0, dvy: 0});
     var b = evaluate(state, t, dt*.5, a);
     var c = evaluate(state, t, dt*.5, b);
@@ -107,6 +116,11 @@ function integrate(state, t, dt) {
 
 function move()
 {
+    // Make sure there is a player to move!
+    if (!me) 
+        return;
+
+    // Translate variables
     var cur = {
         x: me.world_x,
         y: me.world_y,
@@ -114,8 +128,10 @@ function move()
         vy: me.vy
     };
 
+    // t + dt aren't used currently
     var next = integrate(cur, 0, 1);
 
+    // Translate variables back
     me.world_x = next.x;
     me.world_y = next.y;
     me.vx = next.vx;

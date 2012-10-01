@@ -1,16 +1,11 @@
 var socket;
 
-var cyan = '#05FDFD';
-var orange = '#FA7005';
-var colors = [cyan, orange];
-
-var filterStrength = 20,
-    frameTime = 0, 
+var frameTime = 0, 
     lastLoop = new Date, thisLoop = 0;
 
 var general = {
     DEBUG: false,
-    HOST_URI: 'localhost',
+    HOST_URI: 'bubblebattles.jit.su',
     CONN_OPTIONS: {'transports':['websocket']},
     FRAME_INTERVAL: 16,
     WORLD_H: 300,
@@ -21,6 +16,7 @@ var general = {
     CHAT_WIDTH: 250,
     USER_RADIUS: 5,
     USER_MIN_RADIUS: 5,
+    DEFAULT_COLOR: '#555555',
     retrying: false,
 };
 

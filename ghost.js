@@ -1,33 +1,36 @@
+var FOOD_COLOR = '#FFFFFF';
+var FOOD_RADIUS = 5;
+
 (function() {
+
     var isTouching = function(x1, y1, x2, y2, distance) {
         return Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)) < distance;
     }
 
     var respawn = function(me, ids, ghosts, total_world_w, total_world_h) {
-        var radius = 5;
         var angle = Math.random() * 2 * Math.PI;
         var mag = Math.random() * .25 + 1;
         var add_h, add_w = add_h = Math.pow(ids.length + ghosts.length - 1, .7) * 50;
 
         if (Math.random() >= .5) {
             // top or bottom
-            me.world_x = Math.random() * (total_world_w - 2 * radius) + radius;
+            me.world_x = Math.random() * (total_world_w - 2 * FOOD_RADIUS) + FOOD_RADIUS;
             var s = Math.random() >= .5 ? 1 : 0;
-            me.world_y = s * (total_world_h - 2 * radius) + radius;
+            me.world_y = s * (total_world_h - 2 * FOOD_RADIUS) + FOOD_RADIUS;
             if (s == 0)
                 me.world_y -= add_h;
         } else {
             // left or right
             var s = Math.random() >= .5 ? 1 : 0;
-            me.world_x = s * (total_world_w - 2 * radius) + radius;
-            me.world_y = Math.random() * (total_world_h - 2 * radius) + radius;
+            me.world_x = s * (total_world_w - 2 * FOOD_RADIUS) + FOOD_RADIUS;
+            me.world_y = Math.random() * (total_world_h - 2 * FOOD_RADIUS) + FOOD_RADIUS;
             if (s == 0)
                 me.world_x -= add_w;
         }
         
         me.vx = mag * Math.cos(angle);
         me.vy = mag * Math.sin(angle);
-        me.radius = radius;
+        me.radius = FOOD_RADIUS;
     }
 
     var colDetect = function(me, ghosts, ids, users, WORLD_W, WORLD_H) {
@@ -67,7 +70,6 @@
     }
 
     module.exports.add = function(sockets, ids, ghosts, total_world_w, total_world_h) {
-        var radius = 6;
         var angle = Math.random() * 2 * Math.PI;
         var mag = Math.random() * .25 + 1;
         var add_h, add_w = add_h = Math.pow(ids.length + ghosts.length - 1, .7) * 50;
@@ -76,26 +78,26 @@
 
         if (Math.random() >= .5) {
             // top or bottom
-            world_x = Math.random() * (total_world_w - 2 * radius) + radius;
+            world_x = Math.random() * (total_world_w - 2 * FOOD_RADIUS) + FOOD_RADIUS;
             var s = Math.random() >= .5 ? 1 : 0;
-            world_y = s * (total_world_h - 2 * radius) + radius;
+            world_y = s * (total_world_h - 2 * FOOD_RADIUS) + FOOD_RADIUS;
             if (s == 0)
                 world_y -= add_h;
         } else {
             // left or right
             var s = Math.random() >= .5 ? 1 : 0;
-            world_x = s * (total_world_w - 2 * radius) + radius;
+            world_x = s * (total_world_w - 2 * FOOD_RADIUS) + FOOD_RADIUS;
             if (s == 0)
                 world_x -= add_w;
-            world_y = Math.random() * (total_world_h - 2 * radius) + radius;
+            world_y = Math.random() * (total_world_h - 2 * FOOD_RADIUS) + FOOD_RADIUS;
         }
 
         ghost = {
             id: ghosts.length,
             name: '',
-            color: '#FFFFFF',
+            color: FOOD_COLOR,
             ip: '0.0.0.0',
-            radius: radius,
+            radius: FOOD_RADIUS,
             world_x: world_x,
             world_y: world_y,
             vx: mag * Math.cos(angle),
@@ -109,7 +111,7 @@
             id: ghost.id,
             name: ghost.name,
             color: ghost.color,
-            radius: ghost.radius,
+            radius: ghost.FOOD_RADIUS,
             x: ghost.world_x,
             y: ghost.world_y
         }));

@@ -1,15 +1,12 @@
 {
-  "version": "0.0.1-31",
   "dependencies": {
     "socket.io": "*",
     "express": "3.x"
   },
-  "subdomain": "bubblebattles",
   "scripts": {
     "start": "grid-server.js"
   },
   "engines": {
     "node": "0.6.x"
-  },
-  "name": "bubblewars"
+  }
 }

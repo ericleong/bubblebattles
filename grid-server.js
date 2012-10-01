@@ -7,19 +7,18 @@ var sys = require('sys'),
     sio = require('socket.io'),
     fs = require('fs'),
     json = JSON.stringify;
+var ghost = require('./ghost');
 
 var sids = new Array();
 var users = new Array();
+var food = new Array();
 var kicked = new Array();
 
-var accepted_actions = ['move', 'speak', 'conn', 'info', 'thekick', 'theban'];
+var accepted_actions = ['move', 'speak', 'conn', 'info'];
 var currentTime;
 var WORLD_W = 300,
     WORLD_H = 300,
     FRAME_INTERVAL = 16;
-
-var ghost = require('./ghost');
-var food = new Array();
 
 server.listen(8080);
 var io = sio.listen(server);
@@ -73,6 +72,7 @@ io.sockets.on('connection', function(socket){
         }
 
         if(request.action == 'conn') {
+            // Client is connecting for the first time.
             
             add_w = add_h = add_size();
             ghost.add(io.sockets, sids, food, WORLD_W + add_w, WORLD_H + add_h);
@@ -113,6 +113,8 @@ io.sockets.on('connection', function(socket){
                 5 * (Object.keys(sids).length * 233 % 8) + 40);
             request.color = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
 
+
+            // Try to find an empty spot for the player
             var good = false;
 
             while (!good) {
@@ -124,7 +126,7 @@ io.sockets.on('connection', function(socket){
                     var s = sids[i];
                     if (Math.pow(users[s].x - request.x, 2) + 
                         Math.pow(users[s].y - request.y, 2) <
-                        request.radius + users[s].radius) {
+                        Math.pow((request.radius + users[s].radius) / 2, 2)) {
 
                         good = false;
                         break;
@@ -142,17 +144,15 @@ io.sockets.on('connection', function(socket){
                     y: request.y
             }));
 
-            //var access = fs.createWriteStream('/home/azlyth/thegrid/access.log', {flags:'a'});
             currentTime = new Date();
-            //access.write("[" + currentTime.toUTCString() + "] " + request.name + " (SID: " + socket.id + " IP: " + socket.ip +") connected.\n");
 
             sids.push(socket.id);
-            users[socket.id] = {name:request.name, 
-                                color:request.color, 
-                                ip:socket.ip, 
-                                radius:request.radius, 
-                                x:request.x, 
-                                y:request.y
+            users[socket.id] = {name: request.name, 
+                                color: request.color, 
+                                ip: socket.ip, 
+                                radius: request.radius, 
+                                x: request.x, 
+                                y: request.y
                             };
         } else if (sids.indexOf(socket.id) == -1) {
             return false;
@@ -160,6 +160,10 @@ io.sockets.on('connection', function(socket){
 
         if(request.action == 'move') {
             add_w = add_h = add_size();
+
+            // TODO: make sure no one is "cheating"
+            // they should be inside the boundaries
+            // also should not move more than a certain amount
 
             /*if ( request.x < -add_w || request.x > WORLD_W + add_w
                  || request.y < -add_h || request.y > WORLD_H + add_h) 
@@ -181,8 +185,6 @@ io.sockets.on('connection', function(socket){
                 ghost.remove(io.sockets, food);
 
                 currentTime = new Date();
-                //var access = fs.createWriteStream('/home/azlyth/thegrid/access.log', {flags:'a'});
-                //access.write("[" + currentTime.toUTCString() + "] " + users[socket.id].name + " (SID: " + socket.id + " IP: " + socket.ip +") disconnected.\n");
                 sids.splice(sids.indexOf(socket.id),1);
                 delete users[socket.id];
             } else {
@@ -220,8 +222,6 @@ io.sockets.on('connection', function(socket){
             ghost.remove(io.sockets, food);
 
             currentTime = new Date();
-            //var access = fs.createWriteStream('/home/azlyth/thegrid/access.log', {flags:'a'});
-            //access.write("[" + currentTime.toUTCString() + "] " + users[socket.id].name + " (SID: " + socket.id + " IP: " + socket.ip +") disconnected.\n");
             sids.splice(sids.indexOf(socket.id),1);
             delete users[socket.id];
         } else {

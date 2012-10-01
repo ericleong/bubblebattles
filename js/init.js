@@ -1,10 +1,13 @@
 function respawn() {
+    // TODO: prevent cheating by making this client side?
+
     me.x = canvas.width / 2;
     me.y = canvas.height / 2;
     me.vx = 0;
     me.vy = 0;
     me.radius = Math.random() + 10;
 
+    // Try to find an empty spot for the user
     var good = false;
 
     while (!good) {
@@ -16,7 +19,7 @@ function respawn() {
             var s = ids[i];
             if (Math.pow(users[s].x - me.x, 2) + 
                 Math.pow(users[s].y - me.y, 2) <
-                me.radius + users[s].radius) {
+                Math.pow((me.radius + users[s].radius) / 2, 2)) {
 
                 good = false;
                 break;
@@ -37,7 +40,7 @@ function init(name) {
     })
 
     me.name = "";
-    me.color = "#555555";
+    me.color = general.DEFAULT_COLOR;
     me.x = canvas.width / 2;
     me.y = canvas.height / 2;
     me.world_x = 300;
@@ -86,13 +89,6 @@ function init(name) {
             $("#numusers")[0].innerHTML = "Disconnected!<br/>Trying to reconnect...";
             general.retrying = setInterval("io.connect(general.HOST_URI)", 3000);
         });
-    }
-
-    if (general.DEBUG) {
-        $(".debug").css("display", "inline");
-        setInterval(function(){
-            $("#fps")[0].innerHTML = "fps: " + (1000/frameTime).toFixed(1);
-        }, 1000);
     }
 
     setInterval(draw, general.FRAME_INTERVAL);
