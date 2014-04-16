@@ -1,12 +1,21 @@
 {
+  "name": "bubblebattles",
+  "version": "0.0.0-1",
+  "description": "live life as a bubble",
+  "main": "grid-server.js",
   "dependencies": {
-    "socket.io": "*",
-    "express": "3.x"
+    "express": "^3.5.1",
+    "socket.io": "^0.9.16"
   },
+  "devDependencies": {},
   "scripts": {
-    "start": "grid-server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./grid-server.js"
   },
+  "author": "leong@cooper.edu",
+  "license": "MIT",
+  "subdomain": "bubblebattles",
   "engines": {
-    "node": "0.6.x"
+    "node": "0.10.x"
   }
 }

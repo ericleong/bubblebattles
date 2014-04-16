@@ -31,8 +31,24 @@ io.configure('production', function(){
     io.set('transports', ['websocket']);
 });
 
+/* APP */
+var host = 'localhost:8080';
+
+app.configure('production', function() {
+    if (process.env.DOMAIN) {
+        host = process.env.DOMAIN;
+    } else if (process.env.SUBDOMAIN) {
+        host = process.env.SUBDOMAIN + '.jit.su';
+    }
+});
+
 app.configure(function() {
     app.use(express.static(__dirname));
+});
+
+app.get('/js/host.js', function(req, res) {
+    res.type('application/javascript');
+    res.send('var host = "http://' + host + '";');
 });
 
 app.get('/', function(req, res) {

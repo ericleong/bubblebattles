@@ -5,7 +5,6 @@ var frameTime = 0,
 
 var general = {
     DEBUG: false,
-    HOST_URI: 'bubblebattles.jit.su',
     CONN_OPTIONS: {'transports':['websocket']},
     FRAME_INTERVAL: 16,
     WORLD_H: 300,

@@ -29,7 +29,7 @@ function respawn() {
 }
 
 function init(name) {
-    socket = io.connect(general.HOST_URI, general.CONN_OPTIONS);
+    socket = io.connect(host, general.CONN_OPTIONS);
 
     $(window).focus(function() {
         document.location.reload(true);
@@ -53,7 +53,7 @@ function init(name) {
     $("#numusers")[0].innerHTML = "Connecting to server...";
     $("#numusers").show();
     if (socket) {
-        general.retrying = setInterval("io.connect(general.HOST_URI, general.CONN_OPTIONS)",3000);
+        general.retrying = setInterval("io.connect(host, general.CONN_OPTIONS)",3000);
         socket.on('connect', function(){
             if(general.retrying){
                 clearTimeout(general.retrying);
