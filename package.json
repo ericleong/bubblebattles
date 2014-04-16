@@ -14,7 +14,7 @@
   },
   "author": "leong@cooper.edu",
   "license": "MIT",
-  "subdomain": "bubblebattles",
+  "subdomain": "bubblebattle",
   "engines": {
     "node": "0.10.x"
   }

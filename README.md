@@ -8,12 +8,7 @@ To get started simply install the dependencies,
   
     npm install
 
-change the hosts,
-
-    grid.html, line 70
-    grid-client.js, line 9
-
-and start the server
+if necessary, change the `host` in `grid-client.js`. Then start the server
 
     node grid-server.js
 
@@ -21,4 +16,4 @@ and visit
 
 	localhost:8080
 
-in your browser.
+or the host you selected in your browser.
