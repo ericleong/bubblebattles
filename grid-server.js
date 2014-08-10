@@ -20,7 +20,9 @@ var WORLD_W = 300,
     WORLD_H = 300,
     FRAME_INTERVAL = 16;
 
-server.listen(8080);
+var port = Number(process.env.PORT || 8080);
+
+server.listen(port);
 var io = sio.listen(server);
 
 /* SOCKET IO */
@@ -32,19 +34,18 @@ io.configure('production', function(){
 });
 
 /* APP */
-var host = 'localhost:8080';
+var host = 'localhost:' + port;
 
-app.configure('production', function() {
+if (app.get('env') == 'production') {
     if (process.env.DOMAIN) {
         host = process.env.DOMAIN;
     } else if (process.env.SUBDOMAIN) {
+        // nodejitsu
         host = process.env.SUBDOMAIN + '.jit.su';
     }
-});
+}
 
-app.configure(function() {
-    app.use(express.static(__dirname));
-});
+app.use(express.static(__dirname));
 
 app.get('/js/host.js', function(req, res) {
     res.type('application/javascript');

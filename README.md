@@ -8,12 +8,12 @@ To get started simply install the dependencies,
   
     npm install
 
-if necessary, change the `host` in `grid-client.js`. Then start the server
+if necessary, change the `host` in `grid-client.js`, or set the `DOMAIN` environment variable. The port can also be set with the `PORT` environment variable. Then start the server with 
 
-    node grid-server.js
+    $ node grid-server.js
 
 and visit 
 
 	localhost:8080
 
-or the host you selected in your browser.
+in your browser (or the hostname you set).
