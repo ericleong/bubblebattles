@@ -4,11 +4,13 @@ A hackNY Fall 2012 hack focused on bringing bubble consumption to the world of m
 
 Inspired by [Bubbles](http://www.fullstackoptimization.com/bubbles/) and built on top of [thegrid](https://github.com/azlyth/thegrid)
 
-To get started simply install the dependencies, 
+setup
+-----
+bubblebattles runs on node.js. To get started, simply install the dependencies with
   
-    npm install
+    $ npm install
 
-if necessary, change the `host` in `grid-client.js`, or set the `DOMAIN` environment variable. The port can also be set with the `PORT` environment variable. Then start the server with 
+If necessary, change the `host` in `grid-client.js`, or set the `DOMAIN` environment variable. The port can also be set with the `PORT` environment variable. Then start the server with 
 
     $ node grid-server.js
 
